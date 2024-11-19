@@ -1,4 +1,5 @@
 import React from 'react'
+import './Square.css'
 import { Props } from './types'
 
 /* ========================================================================
@@ -12,13 +13,8 @@ const Square = ({ className = '', style = {} }: Props) => {
 
   return (
     <div
-      style={{
-        height: 200,
-        width: 200,
-        backgroundColor: '#15c213',
-        ...style
-      }}
-      className={className}
+      style={style}
+      className={`dc-square${className ? ` ${className}` : ''}`}
     />
   )
 }
