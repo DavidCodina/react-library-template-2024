@@ -13,9 +13,9 @@ export const Square = ({ className = '', style = {} }: Props) => {
   return (
     <div
       style={{
-        height: 150,
-        width: 150,
-        backgroundColor: 'green',
+        height: 200,
+        width: 200,
+        backgroundColor: '#15c213',
         ...style
       }}
       className={className}
