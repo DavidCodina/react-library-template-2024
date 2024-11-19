@@ -10,7 +10,6 @@ const Square = ({ className = '', style = {}, ...otherProps }: Props) => {
   /* ======================
           return
   ====================== */
-
   return (
     <div
       {...otherProps}
