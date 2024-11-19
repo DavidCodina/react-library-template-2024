@@ -30,6 +30,7 @@ jobs:
         with:
           name: dist
           path: dist
+
       # - name: Simulate build job failure
       #   run: exit 1
 
@@ -52,10 +53,17 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Set Git Config
+        run: |
+          git config --global user.email "davidmcodina@icloud.com"
+          git config --global user.name "David Codina"
+
       # - name: Verify dist artifact contents
       #   run: ls
-      #! - name: Install Dependencies
-      #!   run: npm ci
+
+      # - name: Install Dependencies
+      #   run: npm ci
+
       - name: Bump Version
         run: |
           npm version patch -m "Updating patch version"
