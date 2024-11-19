@@ -1,7 +1,7 @@
 {
   "name": "dc-react-ts-test-library",
   "description": "A React component library",
-  "version": "1.1.1119",
+  "version": "1.1.1120",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "files": [
