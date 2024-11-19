@@ -42,6 +42,8 @@ const config = [
       postcss({
         plugins: [],
         minimize: true
+        // sourceMap: true,
+        // modules: true
       }),
       commonjs(),
 
