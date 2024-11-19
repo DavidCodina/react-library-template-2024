@@ -1,27 +1,27 @@
 {
-  "globals": {
-    // Error: "module is not defined"
-    // Solution: set "module": true here.
-    // Or better yet, set env.node: true below.
-    // "module": true
+  "globals": {},
+  "root": true,
+  "env": {
+    // Most modern setups (like yours with TypeScript and Testing Library) already provide the necessary
+    // type definitions and global recognition for Jest functions. So you can typically safely omit
+    // "jest/globals": true without any issues.
+    // "jest/globals": true
+    "browser": true,
+    "es2022": true
+    // "node": true
   },
-  //# "root": true,
-  //# "env": {
-  //#   "browser": true,
-  //#   "es2020": true,
-  //#   "node": true
-  //# },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {},
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
-    //# "plugin:testing-library/react",
-    //# "plugin:jest-dom/recommended",
-    //# "plugin:jsx-a11y/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:storybook/recommended",
-    //# "plugin:@lexical/recommended",
     "prettier"
   ],
 
@@ -29,20 +29,15 @@
 
   "plugins": [
     "@typescript-eslint",
-    //# "vitest",
-    //# https://react.dev/learn/react-compiler#installing-eslint-plugin-react-compiler
-    //# "eslint-plugin-react-compiler",
-    //# "jsx-a11y",
-    //# "testing-library",
-    //# "jest-dom",
+    "jest",
+    "jsx-a11y",
+    "testing-library",
+    "jest-dom",
     "promise",
-    //# "eslint-plugin-tsdoc",
     "prettier"
   ],
 
   "rules": {
-    //# "react-compiler/react-compiler": "warn",
-    //# "tsdoc/syntax": "warn",
     "prettier/prettier": "warn",
     "arrow-body-style": "off",
     "prefer-arrow-callback": "off",
@@ -61,9 +56,7 @@
     ///////////////////////////////////////////////////////////////////////////
     "guard-for-in": "warn",
     "require-await": "warn",
-
-    //# "vitest/expect-expect": "warn",
-    //# "testing-library/no-debugging-utils": "off",
+    "testing-library/no-debugging-utils": "off",
     "prefer-const": "warn",
     "no-var": "warn",
     "no-throw-literal": "warn",
@@ -81,20 +74,6 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
 
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    // This rule requires parserServices to be generated.
-    // i.e.,  "parserOptions": { "project": "./tsconfig.json" },
-    // That said, I prefer not to just for this rule. Why?
-    // Because then you have to be explicit in tsconfig.json about your include array:
-    //
-    //   "include": ["src/**/*", "tw-plugins/**/*", ".storybook/**/*", "vite.config.ts"] // NOT just ["src"]
-    //
-    // Being explicit is actually good, and I am doing that, but it's also a gotcha if you don't do it.
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    // "@typescript-eslint/no-unnecessary-type-assertion": "warn",
-
     "promise/always-return": "warn",
     "promise/no-return-wrap": "warn",
     "promise/param-names": "warn",
@@ -106,8 +85,8 @@
     "promise/avoid-new": "off",
     "promise/no-new-statics": "warn",
     "promise/no-return-in-finally": "warn",
-    "promise/valid-params": "warn"
-    //# "jest/no-disabled-tests": "off",
-    //# "jest/no-commented-out-tests": "off"
+    "promise/valid-params": "warn",
+    "jest/no-disabled-tests": "off",
+    "jest/no-commented-out-tests": "off"
   }
 }

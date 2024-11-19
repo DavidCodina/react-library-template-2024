@@ -1,4 +1,9 @@
 .dc-square {
+  color: #fff;
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
   height: 200px;
   width: 200px;
   /* background-color: #15c213; */

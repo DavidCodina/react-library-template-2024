@@ -73,7 +73,8 @@ jobs:
 
       - name: Publish Package
         env:
-          # The naming convention NODE_AUTH_TOKEN is not arbitrary; it is specifically recognized by npm and the Node.js environment.
+          # The naming convention NODE_AUTH_TOKEN is not arbitrary;
+          # it is specifically recognized by npm and the Node.js environment.
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish
       - name: Push Changes

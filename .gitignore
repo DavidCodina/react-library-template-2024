@@ -3,9 +3,7 @@
 node_modules
 build
 dist
-
-# testing
-/coverage
+coverage
 
 # misc
 .DS_Store
