@@ -5,7 +5,7 @@ import { Props } from './types'
                               Square
 ======================================================================== */
 
-export const Square = ({ className = '', style = {} }: Props) => {
+const Square = ({ className = '', style = {} }: Props) => {
   /* ======================
           return
   ====================== */
@@ -22,3 +22,5 @@ export const Square = ({ className = '', style = {} }: Props) => {
     />
   )
 }
+
+export { Square }
