@@ -3,6 +3,9 @@ name: Publish
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write # Allow the workflow to push to the repository
+
 env:
   NODE_ENV: development
 
