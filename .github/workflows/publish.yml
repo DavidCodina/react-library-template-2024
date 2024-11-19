@@ -1,0 +1,87 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  NODE_ENV: development
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Project
+        # @rollup/plugin-typescript will stop the build for Typescript compiler errors (unlike ESBuild).
+        # Currently, the build command does this: "build": "npm run typescript && rollup -c"
+        # This may actually be redundant...
+        run: npm run build
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+      # - name: Simulate build job failure
+      #   run: exit 1
+
+  publish:
+    needs: [build]
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          registry-url: https://registry.npmjs.org/
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Download Build Artifacts
+        # https://github.com/actions/download-artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      # - name: Verify dist artifact contents
+      #   run: ls
+      #! - name: Install Dependencies
+      #!   run: npm ci
+      - name: Bump Version
+        run: |
+          npm version patch -m "Updating patch version"
+
+      - name: Publish Package
+        env:
+          # The naming convention NODE_AUTH_TOKEN is not arbitrary; it is specifically recognized by npm and the Node.js environment.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
+      - name: Push Changes
+        run: git push
+
+  success:
+    name: Publish Success
+    needs: publish
+    if: ${{ needs.publish.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log Success
+        run: echo "Success!"
+
+  failure:
+    name: Publish Failure
+    needs: publish
+    if: failure() || needs.build.result == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log Failure
+        run: echo "Failure!"

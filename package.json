@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "dev": "rollup -c --watch",
-    "build": "rollup -c",
+    "build": "npm run typescript && rollup -c",
     "typescript": "tsc --noEmit",
     "prebuild": "rimraf dist",
     "prepublish": "npm run build",
