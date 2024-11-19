@@ -1,0 +1,56 @@
+{
+  "name": "dc-react-ts-test-library",
+  "description": "A React component library",
+  "version": "1.1.1118",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "rollup -c --watch",
+    "build": "rollup -c",
+    "typescript": "tsc --noEmit",
+    "prebuild": "rimraf dist",
+    "prepublish": "npm run build"
+  },
+  "keywords": [],
+  "author": "David Codina",
+  "license": "MIT",
+  "dependencies": {
+    "react": ">= 18.3.1",
+    "react-dom": ">= 18.3.1"
+  },
+  "peerDependencies": {
+    "react": ">= 18.3.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.4",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.27.3",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.6.3"
+  }
+}
