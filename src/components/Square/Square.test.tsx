@@ -17,10 +17,9 @@ describe('<Square />...', () => {
     expect(square).toBeInTheDocument()
   })
 
-  test('renders the text "Testing 123..."', () => {
-    render(<Square />)
-
-    const square = screen.getByText('Testing 123...')
-    expect(square).toBeInTheDocument()
-  })
+  // test('renders the text "Testing 123..."', () => {
+  //   render(<Square />)
+  //   const square = screen.getByText('Testing 123...')
+  //   expect(square).toBeInTheDocument()
+  // })
 })

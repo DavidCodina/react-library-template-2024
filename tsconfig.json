@@ -66,7 +66,10 @@
     // "allowArbitraryExtensions": true,                 /* Enable importing files with any extension, provided a declaration file is present. */
     // "noResolve": true,                                /* Disallow 'import's, 'require's or '<reference>'s from expanding the number of files TypeScript should add to a project. */
 
-    /* JavaScript Support */
+    /* ======================
+       JavaScript Support 
+    ====================== */
+
     "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
 
     /* Enable error reporting in type-checked JavaScript files. */
@@ -154,24 +157,25 @@
     // "allowUnusedLabels": true,                        /* Disable error reporting for unused labels. */
     // "allowUnreachableCode": true,                     /* Disable error reporting for unreachable code. */
 
-    /* Completeness */
+    /* ======================
+          Completeness
+    ====================== */
+
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
 
     /* Skip type checking all .d.ts files. */
     "skipLibCheck": true // default: true
   },
   "include": ["src/**/*"],
-  // https://bobbyhadz.com/blog/typescript-exclude-folder-tsconfig
-  // This is what create-react-library does. This may not even
-  // matter since we're using "emitDeclarationOnly":true.
-  // However, it is important to list exclusions in the rollup.config.mjs
-  // typescript plugin's exclude property.
+
   "exclude": [
     "node_modules",
     "dist",
-    "example",
-    "**/*.test.*",
-    "**/*.spec.*",
-    "__tests__"
+    "example"
+    // ❌ Do not exclude the following. It will cause Typescript test files to error with:
+    // Property 'toBeInTheDocument' does not exist on type 'JestMatchers<HTMLElement>'.
+    // "**/*.test.*",
+    // "**/*.spec.*",
+    // "__tests__"
   ]
 }

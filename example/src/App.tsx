@@ -1,6 +1,6 @@
 import './App.css'
 
-import { Square } from 'dc-react-ts-test-library'
+import { Square /*, sum */ } from 'dc-react-ts-test-library'
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
           borderRadius: 10,
           boxShadow: '0px 4px 8px rgba(0,0,0,0.5)'
         }}
+        // className='bg-blue-500'
       />
     </div>
   )

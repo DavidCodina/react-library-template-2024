@@ -29,6 +29,7 @@ dist-ssr
 
 # misc
 .env
+.env*.local
 .env.development
 .env.development.local
 .env.production

@@ -6,6 +6,9 @@ import postcss from 'rollup-plugin-postcss'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import terser from '@rollup/plugin-terser'
 
+import tailwindcss from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
+
 //! import packageJson from './package.json' assert { type: 'json' }
 
 /* ========================================================================
@@ -17,8 +20,29 @@ import terser from '@rollup/plugin-terser'
 
 const config = [
   /* ======================
+          Tailwind
+  ====================== */
+
+  // Usage in consuming app:
+  // import 'dc-react-ts-test-library/dist/main.css'
+  // import 'styles/main.css' // (i.e., app's Tailwind stylesheet)
+
+  {
+    input: 'src/styles/main.css',
+    output: [{ file: 'dist/main.css', format: 'es' }], //^'es' or 'esm'
+    plugins: [
+      postcss({
+        extract: true,
+        // minimize: true,
+        plugins: [tailwindcss, autoprefixer]
+      })
+    ]
+  },
+
+  /* ======================
     JS files configuration
   ====================== */
+
   {
     input: 'src/index.ts',
     output: [
@@ -40,10 +64,45 @@ const config = [
       // Allow for sass/scss usage out of the box. The docs say to
       // install node-sass, but don't do that. Just use npm i -D sass.
       postcss({
-        plugins: [],
         minimize: true
-        // sourceMap: true,
-        // modules: true
+        ///////////////////////////////////////////////////////////////////////////
+        //
+        // If you do this here:
+        //
+        //   plugins: [tailwindcss, autoprefixer]
+        //
+        // It will bake the Tailwind styles into the components.
+        // However, in the top-level index.ts, you also must do this:
+        // import './styles/main.css'
+        // Note: This will also enable the tailwind plugins to work.
+        //
+        // If you're using Tailwind classes in the components, it becomes very
+        // important that you use twMerge. Otherwise, you'll end up aggressively
+        // hardcoding styles.
+        //
+        // That said, if your app has a custom color that overwrites Tailwind's colors,
+        // Then the component library's color palette seems to win out.
+        // Even if we give the library Tailwind a prefix (e.g., 'xx-'), the library Tailwind
+        // still wins out.
+        //
+        // Also if you use a plugin class that is now more aggressive.
+        // Presumably because the plugin class now has a higher specificity when it's coming from the library.
+        // Ultimately, this is a bad idea. The real way to handle Tailwind is to use the above Tailwind configuration.
+        //  Then in the consuming app's main.tsx or primary layout etc. do this:
+        //
+        //   import 'dc-react-ts-test-library/dist/main.css'
+        //   import 'styles/main.css'
+        //
+        // That way you will be getting the Tailwind styles from the library, but your own styles will
+        // have a higher priority. Note: it's still crucial to use twMerge() in the components.
+        // However, the best possible way to use Tailwind in this library is to build out the styles
+        // as Tailwind component plugins then add them to the tailwind.config.ts here (No need to add them in the consuming app).
+        // In that case, Tailwind utility classes in the consuming app will necessarily have higher precedence regardless of
+        // whether or not twMerge() was implemented within the libary components. This is the way...
+        //
+        // ❌ plugins: [tailwindcss, autoprefixer]
+        //
+        ///////////////////////////////////////////////////////////////////////////
       }),
       commonjs(),
 
@@ -69,6 +128,8 @@ const config = [
         // Presumably, the exclusions are all relative to the src folder.
         // In any case, it does not seem to be including the example app,
         // so there's no need to add that here.
+
+        // ???????????????????????????
         // exclude: [
         //   '**/__tests__',
         //   '**/tests',
@@ -83,13 +144,14 @@ const config = [
       }),
       terser()
     ]
-    //# external: [
+    // ???????????????????????????
+    // external: [
     //   'react',
     //   'react-dom',
     //   'prop-types',
     //   'styled-components',
     //   'bootstrap'
-    //# ]
+    // ]
   },
 
   /* ======================
