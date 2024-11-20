@@ -12,7 +12,7 @@ function App() {
           borderRadius: 10,
           boxShadow: '0px 4px 8px rgba(0,0,0,0.5)'
         }}
-        // className='bg-blue-500'
+        className='bg-lime-500'
       />
     </div>
   )

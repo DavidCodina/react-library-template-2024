@@ -1,4 +1,5 @@
 .dc-square {
+  outline: 5px dashed #333;
   color: #fff;
   /* display: flex; */
   font-size: 20px;
@@ -7,5 +8,5 @@
   height: 250px;
   width: 250px;
   /* background-color: #15c213; */
-  /* background-color: #50bfe6; */
+  background-color: #50bfe6;
 }

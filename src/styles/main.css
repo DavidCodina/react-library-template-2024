@@ -1,3 +1,37 @@
+/* 
+https://tailwindcss.com/docs/using-with-preprocessors
+https://www.npmjs.com/package/postcss-import
+
+Instead of doing this:
+
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; 
+
+Switch to @import syntax and install postcss-import.
+This allows us to then import other styles directly into the main.css.
+This pattern is better than importing separate local .css files directly
+into the components and having a separate rollup config object for them.
+Doing that results in overly aggressive .css files.
+
+The first consequence of that aggression is that the Tailwind utilities
+within this library will have lower specficity than the local .css files.
+The second consequence is that CSS will ALSO have a higher specificity 
+than the Tailwind in the consuming appliction.
+
+The best approach is to add everything into this single css file, then
+in the consuming app do this:
+
+import 'dc-react-ts-test-library/dist/main.css'
+import 'styles/YOUR_TAILWIND_STYLESHEET.css'
+
+Finally, I actually always want other .css files in this library to
+generally have less specificity than Tailwind utilities. Consequently,
+it's generally a good put all of those @import statements BEFORE 
+@import 'tailwindcss/utilities'
+*/
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import '../components/Square/styles.css';
+@import 'tailwindcss/utilities';

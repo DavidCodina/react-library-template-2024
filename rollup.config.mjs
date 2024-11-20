@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript'
 import dts from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
+import postcssImport from 'postcss-import'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import terser from '@rollup/plugin-terser'
 
@@ -14,6 +15,7 @@ import autoprefixer from 'autoprefixer'
 /* ========================================================================
 
 ======================================================================== */
+
 // The rollup config is an array of config objects. For our library we will
 // need two separate configuration objects. The first one will export the
 // javascript files. The second one is for exporting our types.
@@ -22,19 +24,22 @@ const config = [
   /* ======================
           Tailwind
   ====================== */
-
+  // https://www.npmjs.com/package/rollup-plugin-postcss
   // Usage in consuming app:
   // import 'dc-react-ts-test-library/dist/main.css'
   // import 'styles/main.css' // (i.e., app's Tailwind stylesheet)
 
   {
     input: 'src/styles/main.css',
+
     output: [{ file: 'dist/main.css', format: 'es' }], //^'es' or 'esm'
     plugins: [
       postcss({
         extract: true,
         // minimize: true,
-        plugins: [tailwindcss, autoprefixer]
+        // Don't forget to add 'postcss-import': {}, to the postcss.config.mjs,
+        // which is used within .storybook/main.ts
+        plugins: [postcssImport(), tailwindcss(), autoprefixer()]
       })
     ]
   },
@@ -60,50 +65,71 @@ const config = [
     plugins: [
       // Docs indicate to 'preferably set as first plugin'
       peerDepsExternal(),
+
       resolve(),
-      // Allow for sass/scss usage out of the box. The docs say to
-      // install node-sass, but don't do that. Just use npm i -D sass.
-      postcss({
-        minimize: true
-        ///////////////////////////////////////////////////////////////////////////
-        //
-        // If you do this here:
-        //
-        //   plugins: [tailwindcss, autoprefixer]
-        //
-        // It will bake the Tailwind styles into the components.
-        // However, in the top-level index.ts, you also must do this:
-        // import './styles/main.css'
-        // Note: This will also enable the tailwind plugins to work.
-        //
-        // If you're using Tailwind classes in the components, it becomes very
-        // important that you use twMerge. Otherwise, you'll end up aggressively
-        // hardcoding styles.
-        //
-        // That said, if your app has a custom color that overwrites Tailwind's colors,
-        // Then the component library's color palette seems to win out.
-        // Even if we give the library Tailwind a prefix (e.g., 'xx-'), the library Tailwind
-        // still wins out.
-        //
-        // Also if you use a plugin class that is now more aggressive.
-        // Presumably because the plugin class now has a higher specificity when it's coming from the library.
-        // Ultimately, this is a bad idea. The real way to handle Tailwind is to use the above Tailwind configuration.
-        //  Then in the consuming app's main.tsx or primary layout etc. do this:
-        //
-        //   import 'dc-react-ts-test-library/dist/main.css'
-        //   import 'styles/main.css'
-        //
-        // That way you will be getting the Tailwind styles from the library, but your own styles will
-        // have a higher priority. Note: it's still crucial to use twMerge() in the components.
-        // However, the best possible way to use Tailwind in this library is to build out the styles
-        // as Tailwind component plugins then add them to the tailwind.config.ts here (No need to add them in the consuming app).
-        // In that case, Tailwind utility classes in the consuming app will necessarily have higher precedence regardless of
-        // whether or not twMerge() was implemented within the libary components. This is the way...
-        //
-        // ❌ plugins: [tailwindcss, autoprefixer]
-        //
-        ///////////////////////////////////////////////////////////////////////////
-      }),
+      ///////////////////////////////////////////////////////////////////////////
+      //
+      // ❌ Anti-Pattern: Colocating .css files with components when using Tailwind.
+      //
+      // Ultimately, we probably don't want to colocate CSS files with our components,
+      // and subsequently bake it into the components themselves.
+      //
+      // Instead it would be better to bundle up all CSS files into main.css.
+      // Otherwise, we might end up with specificity issues.
+      //
+      // However, even that gets tricky because normal CSS that is added
+      // to a file after the Tailwind directives will have a higher specificity.
+      // This is why the BEST solution is to ALWAYS use Tailwind component plugins
+      // and NOT .css files.
+      //
+      // Alternatively, you could use @layer comonent { ... } in the main.css, but
+      // that can quickly get way too large. Thus while this configuration is still
+      // a possibility, I would prefer to NOT to do this, and may remove it in the futre.
+      // For now, the takeaways is: DO NOT use any other .css files besides src/styles/main.css.
+      //
+      ///////////////////////////////////////////////////////////////////////////
+
+      // postcss({
+      //   minimize: true,
+      //   ///////////////////////////////////////////////////////////////////////////
+      //   //
+      //   // If you do this here:
+      //   //
+      //   //   plugins: [tailwindcss, autoprefixer]
+      //   //
+      //   // It will bake the Tailwind styles into the components.
+      //   // However, in the top-level index.ts, you also must do this:
+      //   // import './styles/main.css'
+      //   // Note: This will also enable the tailwind plugins to work.
+      //   //
+      //   // If you're using Tailwind classes in the components, it becomes very
+      //   // important that you use twMerge. Otherwise, you'll end up aggressively
+      //   // hardcoding styles.
+      //   //
+      //   // That said, if your app has a custom color that overwrites Tailwind's colors,
+      //   // Then the component library's color palette seems to win out.
+      //   // Even if we give the library Tailwind a prefix (e.g., 'xx-'), the library Tailwind
+      //   // still wins out.
+      //   //
+      //   // Also if you use a plugin class that is now more aggressive.
+      //   // Presumably because the plugin class now has a higher specificity when it's coming from the library.
+      //   // Ultimately, this is a bad idea. The real way to handle Tailwind is to use the above Tailwind configuration.
+      //   //  Then in the consuming app's main.tsx or primary layout etc. do this:
+      //   //
+      //   //   import 'dc-react-ts-test-library/dist/main.css'
+      //   //   import 'styles/main.css'
+      //   //
+      //   // That way you will be getting the Tailwind styles from the library, but your own styles will
+      //   // have a higher priority. Note: it's still crucial to use twMerge() in the components.
+      //   // However, the best possible way to use Tailwind in this library is to build out the styles
+      //   // as Tailwind component plugins then add them to the tailwind.config.ts here (No need to add them in the consuming app).
+      //   // In that case, Tailwind utility classes in the consuming app will necessarily have higher precedence regardless of
+      //   // whether or not twMerge() was implemented within the libary components. This is the way...
+      //   //
+      //   // ❌ plugins: [tailwindcss(), autoprefixer()]
+      //   //
+      //   ///////////////////////////////////////////////////////////////////////////
+      // }),
       commonjs(),
 
       //^ Gotcha: https://github.com/rollup/plugins/issues/1813
