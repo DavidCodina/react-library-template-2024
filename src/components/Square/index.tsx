@@ -32,9 +32,9 @@ const Square = ({ className = '', style = {}, ...otherProps }: Props) => {
     <div
       {...otherProps}
       style={style}
-      // className={twMerge('h-40 w-40 bg-lime-500', className)}
+      className={twMerge('h-40 w-40 bg-lime-500', className)}
       // className={`bg-red-500 dc-square${className ? ` ${className}` : ''}`}
-      className={twMerge('square', className)}
+      // className={twMerge('square', className)}
     >
       {/* {data.test} */}
     </div>
