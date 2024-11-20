@@ -6,7 +6,6 @@ import postcss from 'rollup-plugin-postcss'
 import postcssImport from 'postcss-import'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import terser from '@rollup/plugin-terser'
-
 import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 
@@ -63,7 +62,33 @@ const config = [
       }
     ],
     plugins: [
+      ///////////////////////////////////////////////////////////////////////////
+      //
       // Docs indicate to 'preferably set as first plugin'
+      // This plugin looks at the package.json's peerDependencies and then
+      // omits them from the bundle. While react and react-dom are almost always
+      // added as peer dependencies, there's mixed opinions on whether to add
+      // other packages (e.g., framer-motion, react-select, etc.).
+      //
+      // Generally, it's better to include almost everything as a peer dependency.
+      // With modern npm (version 7 and above), peer dependencies are installed automatically by default.
+      // This is a significant improvement from earlier versions where developers had to manually install
+      // peer dependencies. There's essentially no drawback to being liberal with peer dependencies.
+      // Adding peer dependencies has a SIGNIFICANT impact on bundle size!
+      // Here's how I'm currently handling peer dependencies:
+      //
+      //   "peerDependencies": {
+      //     "react": ">= 18.x",
+      //     "react-dom": ">= 18.x",
+      //     "tailwind-merge": "^2.x"
+      //   },
+      //
+      // react and react-dom use >= syntax because I'm confident I will be able to keep the
+      // library up to date and watch for breaking changes. Other packages, however, I may
+      // not be able to keep up with so regularly, so I'm using ^ syntax to limit the range
+      // the the major versions.
+      //
+      ///////////////////////////////////////////////////////////////////////////
       peerDepsExternal(),
 
       resolve(),
@@ -83,9 +108,8 @@ const config = [
       // and NOT .css files.
       //
       // Alternatively, you could use @layer comonent { ... } in the main.css, but
-      // that can quickly get way too large. Thus while this configuration is still
-      // a possibility, I would prefer to NOT to do this, and may remove it in the futre.
-      // For now, the takeaways is: DO NOT use any other .css files besides src/styles/main.css.
+      // that can quickly get way too large. Solution: use postcss-import and @import
+      // all .css files into main.css - DO NOT import them directly into the components!
       //
       ///////////////////////////////////////////////////////////////////////////
 
@@ -151,33 +175,9 @@ const config = [
         ///////////////////////////////////////////////////////////////////////////
         sourceMap: true,
         inlineSources: true
-        // Presumably, the exclusions are all relative to the src folder.
-        // In any case, it does not seem to be including the example app,
-        // so there's no need to add that here.
-
-        // ???????????????????????????
-        // exclude: [
-        //   '**/__tests__',
-        //   '**/tests',
-        //   '**/__mocks__',
-        //   '**/mocks',
-        //   '**/jest-setup.*',
-        //   '**/setupTests.*',
-        //   '**/*.test.*',
-        //   '**/*.stories.*',
-        //   '**/story.*'
-        // ]
       }),
       terser()
     ]
-    // ???????????????????????????
-    // external: [
-    //   'react',
-    //   'react-dom',
-    //   'prop-types',
-    //   'styled-components',
-    //   'bootstrap'
-    // ]
   },
 
   /* ======================
