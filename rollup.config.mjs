@@ -23,11 +23,37 @@ const config = [
   /* ======================
           Tailwind
   ====================== */
+  ///////////////////////////////////////////////////////////////////////////
+  //
   // https://www.npmjs.com/package/rollup-plugin-postcss
   // Usage in consuming app:
-  // import 'dc-react-ts-test-library/dist/main.css'
-  // import 'styles/main.css' // (i.e., app's Tailwind stylesheet)
-
+  //
+  //   import 'dc-react-ts-test-library/dist/main.css'
+  //   import 'styles/main.css' // (i.e., app's Tailwind stylesheet)
+  //
+  // Alternatively, you could add this to the consuming app's tailwind.config.ts:
+  //
+  // content: ['./node_modules/dc-react-ts-test-library/dist/esm/index.js', ...],
+  //
+  //
+  // However, that approach would require manually exporting tailwind plugins and having
+  // the user install them in their tailwind.config.ts. This is kind of what Flowbite does:
+  // https://flowbite-react.com/docs/getting-started/introduction
+  // For an actual example that literally has the user's Tailwind config point into node_modules,
+  // see Preline UI: https://preline.co/docs/index.html
+  //
+  // The difference between these approaches and importing the library's global CSS is that in
+  // the latter approach, we actually have two stylesheets, which is not great, but not horrible either.
+  //
+  // There is a third approach that I think Ripple UI takes:
+  // When you install the Ripple UI plugin in your tailwind.config.js file,
+  // it automatically includes the necessary Tailwind classes used by Ripple UI components.
+  // This way, the consuming application doesn't need to manually import a stylesheet or add
+  // anything to the content configuration. It looks like this is accomplished through having
+  // a safelist within the Ripple UI plugin:
+  // https://github.com/Siumauricio/rippleui/blob/main/config/utils/safeList.ts
+  //
+  ///////////////////////////////////////////////////////////////////////////
   {
     input: 'src/styles/main.css',
 
