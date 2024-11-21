@@ -1,4 +1,6 @@
-//# import data from './data.json'
+// import data from './data.json'
+// @ts-ignore
+import ren from './ren.jpeg'
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -37,13 +39,13 @@ const Square = ({ className = '', style = {}, ...otherProps }: Props) => {
       {...otherProps}
       style={style}
       className={twMerge(
-        'flex h-40 w-40 items-center justify-center bg-blue-500 text-2xl font-bold text-white',
+        'flex h-40 w-40 items-center justify-center bg-purple-500 text-2xl font-bold text-white',
         className
       )}
       // className={twMerge('square', className)}
     >
+      <img className='block h-32 w-32 rounded-lg' src={ren} alt='' />
       {/* {data.test} */}
-      Hello
     </div>
   )
 }

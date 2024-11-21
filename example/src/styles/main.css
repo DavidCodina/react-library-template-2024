@@ -1,3 +1,217 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Tailwind's base is more than just preflight.css
+ It also includes any base styles defined by the tailwind.config.cjs */
+/* @import './custom-preflight.css'; */
+
+/*  @import must precede all other statements.
+ This error is not triggered when using .scss. 
+ In any case, the solution is to use the alternate
+ syntax for importing tailwind directives intermixed
+ with other .css files.  */
+
+/* @import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities'; */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @import '../layout/NavBar/navbar.css'; */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+/* ======================
+      Reset Styles
+====================== */
+/* Using smooth as Bootstrap does is annoying for page switches.
+Programmaticaly disabling it every time we switch pages is tedious.
+If we ever want smooth scroll for a particular page or feature, it's
+easier to programmatically opt in, rather than opting out every time.*/
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: auto; /* overwrite bootstrap */
+  }
+}
+
+html {
+  /* This is generally what Tailwind expects, and what browsers tend
+  to default to. Changing the font-size in the root element (i.e.,
+  the html element will affect every aspect of tailwind that is 
+  relative to rem units.
+  font-size: 1rem; */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* ======================
+
+====================== */
+/* align-items: flex-start fixes an issue that occurs in Storybook v6.
+That also uses a #root. If using  align-items: flex-start causes
+issues in the actual app, then we can switch to .root (adding it to index.html).
+align-items: flex-start; can potentially horizontally squish the child content
+if the page component does not have sufficient styles on the top-level wrapper.
+For example, the following Tailwind classes: className='2xl:container flex-1 mx-auto w-full p-6'
+Update: Storybook v7 still uses a #root, but for some reason these styles don't bleed in. */
+
+#root {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  /* Septermber 4, 2023.
+  Kevin Powell has a video where he discourages using
+  vh units here.
+ 
+    https://www.youtube.com/watch?v=veEqYQlfNx8 
+
+  At 3:15 in the above video, he demonstrates that
+  on mobile web it doesn't always work out the way
+  we intend. One potential fix for this is to use
+  dvh units instead. Because browser support isn't 
+  all the way there yet, we can also use a vh fallback.
+
+  It's important to note that he explicitly advises against
+  using 100vw because on windows it doesn't take into account
+  the scrollbar.
+  
+  The other alternative for setting height on #root would be
+  to also set height:100% on html and body, then set 
+  height:100%; min-height:100%; here (i.e., old-skool). 
+
+  See also: 
+  https://www.youtube.com/watch?v=O16af0iRs44
+  https://web.dev/viewport-units/
+
+  
+  */
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+th {
+  text-align: -webkit-match-parent;
+}
+
+@layer components {
+  /* Technically, this is a utility, but I want 
+  tailwind utilities to be able to overwrite it. */
+  .bg-off-white {
+    background-color: #fafafa;
+  }
+
+  /* Technically, this is a utility, but I want 
+  tailwind utilities to be able to overwrite it. */
+  .hide-border {
+    margin: -1px 0px -1px -1px;
+    width: calc(100% + 1px);
+  }
+
+  /* ======================
+        .terminal
+  ====================== */
+
+  .terminal {
+    margin-bottom: 0px;
+    background-color: #000;
+    background-image: radial-gradient(rgba(0, 150, 0, 0.5), black 120%);
+    border: 2px solid #bcc6cc;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+    position: relative;
+  }
+
+  .terminal::after {
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.3) 1px,
+      transparent 1px,
+      transparent 2px
+    ) !important;
+    border-radius: inherit;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
+/* ======================
+    .transition-none 
+====================== */
+/* Note: Tailwind already has a transition-none that sets
+transition-property: none; However, this is useful for forcing
+it everywhere. Currently, it's hardcoded on <html> to prevent 
+light/dark theme transition from happening on mount. */
+
+.transition-none-all,
+.transition-none-all * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+/* ======================
+    .hide-scrollbar 
+====================== */
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ======================
+
+====================== */
+
+.stretched-link::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  content: '';
+}
+
+/* ======================
+  React Toastify Hacks
+====================== */
+
+.Toastify__toast-theme--dark {
+  --toastify-color-dark: theme(colors.slate.800);
+  border: 1px solid theme(colors.slate.600);
+}
+
+/* .Toastify__toast-theme--dark.Toastify__toast--default {
+  border: 1px solid var(--toastify-color-light);
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--info {
+  border: 1px solid var(--toastify-color-info);
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--success {
+  border: 1px solid var(--toastify-color-success);
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--warning {
+  border: 1px solid var(--toastify-color-warning);
+}
+
+.Toastify__toast-theme--dark.Toastify__toast--error {
+  border: 1px solid var(--toastify-color-error);
+} */
