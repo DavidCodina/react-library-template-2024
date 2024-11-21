@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss'
-import { squarePlugin } from './plugins/squarePlugin'
+import { library } from './src/plugins'
 
 const config: Config = {
   // prefix: 'xx-',
@@ -8,7 +8,7 @@ const config: Config = {
   theme: {
     extend: {}
   },
-  plugins: [squarePlugin]
+  plugins: [library.plugin]
 }
 
 export default config

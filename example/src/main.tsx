@@ -1,4 +1,4 @@
-import 'dc-react-ts-test-library/dist/main.css'
+// import 'dc-react-ts-test-library/dist/main.css'
 
 // This must come first in order to prevent preflight attribute selectors with equal
 // specificity like [type='button'] from overriding certain class selectors.

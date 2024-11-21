@@ -32,5 +32,15 @@ good put all of those @import statements BEFORE @import 'tailwindcss/utilities'
 
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
-@import '../components/Square/styles.css';
+
+/* 
+Update: While this is still the best approach for client applications, 
+I've decided to go with a libary consumption pattern that has the user
+configure their Tailwind config with library.plugin + library.content.
+Ultimately, this means that they will NOT be importing the dist/main.css
+unless for some reason they're not using Tailwind at all. Consequently,
+we SHOULD NOT use any other stylesheets anywhere! Instead, if you need
+extra styles, it should be done entirely through src/plugins.
+@import '../components/MyComponent/styles.css'; 
+*/
 @import 'tailwindcss/utilities';
