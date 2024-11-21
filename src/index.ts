@@ -1,4 +1,5 @@
 // ❌ import './styles/main.css'
 export * from './components'
+export * from './plugins'
 //# export * from './hooks'
 export * from './utils'

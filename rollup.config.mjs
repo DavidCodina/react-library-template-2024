@@ -23,11 +23,53 @@ const config = [
   /* ======================
           Tailwind
   ====================== */
+  ///////////////////////////////////////////////////////////////////////////
+  //
   // https://www.npmjs.com/package/rollup-plugin-postcss
-  // Usage in consuming app:
-  // import 'dc-react-ts-test-library/dist/main.css'
-  // import 'styles/main.css' // (i.e., app's Tailwind stylesheet)
-
+  // Usage in consuming app that doesn't use Tailwind:
+  //
+  //   import 'dc-react-ts-test-library/dist/main.css'
+  //   import 'styles/main.css' // (i.e., app's primary stylesheet)
+  //
+  /////////////////////////
+  //
+  // Alternatively, you could add this to the consuming app's tailwind.config.ts:
+  //
+  //   import type { Config } from 'tailwindcss'
+  //   import { library } from 'dc-react-ts-test-library'
+  //
+  //   const config: Config = {
+  //     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', library.content],
+  //     theme: { extend: {} },
+  //     plugins: [library.plugin]
+  //   }
+  //
+  //   export default config
+  //
+  // This is the most idiomatic appproach, but it means that the use of @import for importing
+  // other CSS files is no longer an option. Why? Because we're no longer using the library's
+  // dist/main.css. Instead, we're relying entirely on the libary.plugin + library.content path.
+  // See Flowbite and Preline UI:
+  //
+  //    https://flowbite-react.com/docs/getting-started/introduction
+  //    https://preline.co/docs/index.html
+  //
+  /////////////////////////
+  //
+  // There is a third approach that I think Ripple UI takes, where it doesn't even require
+  // the user to set the content string. When one installs the Ripple UI plugin in ther tailwind
+  // config,  it automatically includes the necessary Tailwind classes used by Ripple UI components.
+  // This way, the consuming application doesn't need to manually import a stylesheet or add
+  // anything to the content configuration. It looks like this is accomplished through having
+  // a safelist within the Ripple UI plugin:
+  //
+  //   https://github.com/Siumauricio/rippleui/blob/main/config/utils/safeList.ts
+  //
+  // Again, one can no longer use @import syntax to merge CSS files into the library's main.css.
+  // Moreover, you have to carefully manage the safelist. That's very tedious, which is why for now
+  // I'm preferring approach 2.
+  //
+  ///////////////////////////////////////////////////////////////////////////
   {
     input: 'src/styles/main.css',
 
