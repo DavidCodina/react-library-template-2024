@@ -6,9 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*storybook.log
 
 node_modules
+docs
+coverage
 dist
+build
 dist-ssr
 *.local
 
@@ -22,3 +26,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# misc
+.env
+.env*.local
+.env.development
+.env.development.local
+.env.production
+.env.production.local
+.env.local
+.env.test.local

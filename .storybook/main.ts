@@ -1,5 +1,9 @@
 import type { StorybookConfig } from '@storybook/react-webpack5'
 
+/* ========================================================================
+
+======================================================================== */
+
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
@@ -8,6 +12,9 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    // For Tailwind dark mode support of components.
+    // Not related to Storybook dark mode.
+    '@storybook/addon-themes',
     // https://storybook.js.org/addons/@storybook/addon-styling-webpack
     {
       name: '@storybook/addon-styling-webpack',
@@ -37,6 +44,12 @@ const config: StorybookConfig = {
   framework: {
     name: '@storybook/react-webpack5',
     options: {}
+  },
+  // By default it was docs: { autodocs: 'tag'}
+  // That setting would mean that any .stories.tsx file that had tags: ['autodocs'],
+  // in the meta would get docs. However, I actually always want the docs.
+  docs: {
+    autodocs: true // 'tag'
   }
 }
 export default config
