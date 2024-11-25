@@ -3,14 +3,16 @@ import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript'
 import dts from 'rollup-plugin-dts'
 import postcss from 'rollup-plugin-postcss'
-import postcssImport from 'postcss-import'
+//! import postcssImport from 'postcss-import'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import terser from '@rollup/plugin-terser'
 import json from '@rollup/plugin-json'
 import image from '@rollup/plugin-image'
-
-import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
+
+// In Tailwind v3 we simply did: import tailwindcss from 'tailwindcss'.
+// Nowe we need to do this:
+import tailwindcss from '@tailwindcss/postcss'
 
 // https://stackoverflow.com/questions/70106880/err-import-assertion-type-missing-for-import-of-json-file
 // Use `with` NOT `assert`
@@ -80,11 +82,40 @@ const config = [
     plugins: [
       postcss({
         extract: true,
-        //minimize: true,
+        // minimize: true,
         // Don't forget to add 'postcss-import': {}, to the postcss.config.mjs,
         // which is used within .storybook/main.ts
-        plugins: [postcssImport(), tailwindcss(), autoprefixer()]
+        plugins: [
+          // postcssImport(), // Should already be baked into tailwindcss()
+          tailwindcss(),
+          autoprefixer()
+        ]
       })
+    ]
+  },
+
+  /* ======================
+  libraryPlugin configuration
+  ====================== */
+
+  {
+    input: 'src/plugins/masterPlugin.ts',
+
+    output: [
+      {
+        file: 'dist/libraryPlugin.js',
+        format: 'esm'
+        // sourcemap: true
+      }
+    ],
+    plugins: [
+      resolve(),
+      typescript({
+        tsconfig: './tsconfig.json'
+        // sourceMap: true,
+        // inlineSources: true
+      }),
+      terser()
     ]
   },
 

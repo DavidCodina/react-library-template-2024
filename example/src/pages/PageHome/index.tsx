@@ -34,6 +34,7 @@ const PageHome = () => {
           >
             Home
           </span>
+
           <span
             className='bg-gradient-to-r from-violet-700 to-sky-400 bg-clip-text text-transparent'
             style={{
@@ -47,7 +48,6 @@ const PageHome = () => {
         <HR style={{ marginBottom: 50 }} />
 
         <div className='square mb-6' />
-
         <div className='my-circle mb-6' />
 
         <Square />

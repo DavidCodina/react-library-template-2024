@@ -1,46 +1,81 @@
-/* 
-https://tailwindcss.com/docs/using-with-preprocessors
-https://www.npmjs.com/package/postcss-import
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* @import 'tailwindcss'; */
+/* Use @source followed by string to add another source */
+@layer theme, base, components, utilities;
 
-Instead of doing this:
+/* ========================================================================
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities; 
+======================================================================== */
 
-Switch to @import syntax and install postcss-import.
-This allows us to then import other styles directly into the main.css.
-This pattern is better than importing separate local .css files directly
-into the components and having a separate rollup config object for them.
-Doing that results in overly aggressive .css files.
+@import 'tailwindcss/theme' layer(theme);
+@theme {
+  --body-color: rgb(237, 242, 249);
 
-The first consequence of that aggression is that the Tailwind utilities
-within this library will have lower specficity than the local .css files.
-The second consequence is that CSS will ALSO have a higher specificity 
-than the Tailwind in the consuming appliction.
+  /* Used by MainLayout & Menu */
+  --dark-body-color: var(--color-slate-900);
+  /* Used by MainLayout */
+  --dark-text-color: #fff;
+  /* Used by Card (border), Tooltip (border), etc. */
 
-The best approach is to add everything into this single CSS file, then
-in the consuming app do this:
+  --dark-primary-color: var(--color-cyan-400);
+  --dark-nav-link-hover-color: var(--color-pink-500);
+  /* Used by Card, Tooltip, etc. 
+  This is lighter than --dark-body-color.
+  It's used to accentuate Card backgrounds, etc.
+  */
 
-import 'dc-react-ts-test-library/dist/main.css'
-import 'styles/YOUR_TAILWIND_STYLESHEET.css'
+  --dark-bg-color: var(--color-slate-800);
+  /* Used by Card */
+  --dark-shadow-color: var(--color-neutral-950);
+}
 
-Finally, I actually always want other .css files in this library to
-generally have less specificity than Tailwind utilities. Consequently, it's a
-good put all of those @import statements BEFORE @import 'tailwindcss/utilities'
+/* ========================================================================
+
+======================================================================== */
+
+@import 'tailwindcss/preflight' layer(base);
+@layer base {
+}
+
+/* ========================================================================
+
+======================================================================== */
+
+/* The @layer components is provided as a place for you to add your own component classes */
+@layer components {
+}
+
+/* ========================================================================
+
+======================================================================== */
+
+@import 'tailwindcss/utilities' layer(utilities);
+
+/* To add a custom utility in v4.0, use the new @utility directive: 
+@utility your-class-name {
+}
 */
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-
+/* ========================================================================
+                                  Plugins
+======================================================================== */
 /* 
-Update: While this is still the best approach for client applications, 
-I've decided to go with a libary consumption pattern that has the user
-configure their Tailwind config with library.plugin + library.content.
-Ultimately, this means that they will NOT be importing the dist/main.css
-unless for some reason they're not using Tailwind at all. Consequently,
-we SHOULD NOT use any other stylesheets anywhere! Instead, if you need
-extra styles, it should be done entirely through src/plugins.
-@import '../components/MyComponent/styles.css'; 
+https://tailwindcss.com/docs/v4-beta#using-plugins
+To load a plugin in v4.0, use the the new @plugin directive.
+The @plugin directive takes either a package name or a local path.
 */
-@import 'tailwindcss/utilities';
+
+/* @plugin "../../tw-plugins/basePlugin.ts"; */
+
+/* ========================================================================
+                           Dark Mode
+======================================================================== */
+
+@variant dark (&:where(.dark, .dark *));
+
+/* ========================================================================
+                          tailwind.config.ts
+======================================================================== */
+/* This is necessary because the library connects through a javascript object. */
+
+@config "../../tailwind.config.ts";

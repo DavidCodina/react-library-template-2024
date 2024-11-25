@@ -1,5 +1,5 @@
-// import data from './data.json'
-import ren from './ren.jpeg'
+import data from './data.json'
+// import ren from './ren.jpeg'
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -20,6 +20,7 @@ import ren from './ren.jpeg'
 ///////////////////////////////////////////////////////////////////////////
 
 import React from 'react'
+
 import { twMerge } from 'tailwind-merge'
 import { Props } from './types'
 
@@ -37,13 +38,13 @@ const Square = ({ className = '', style = {}, ...otherProps }: Props) => {
       {...otherProps}
       style={style}
       className={twMerge(
-        `flex h-40 w-40 items-center justify-center rounded-xl bg-purple-500 text-2xl font-bold text-white dark:border-4 dark:border-dashed dark:border-red-500`,
+        `flex h-40 w-40 items-center justify-center rounded-xl bg-green-500 text-2xl font-bold text-white dark:border-4 dark:border-dashed dark:border-red-500`,
         className
       )}
       // className={twMerge('square', className)}
     >
-      <img className='block h-32 w-32 rounded-lg' src={ren} alt='' />
-      {/* {data.test} */}
+      {/* <img className='block h-32 w-32 rounded-xl' src={ren} alt='' /> */}
+      {data.test}
     </div>
   )
 }

@@ -3,11 +3,9 @@ import { library } from './src/plugins'
 
 const config: Config = {
   // prefix: 'xx-',
-  darkMode: 'selector',
+  // darkMode: 'selector',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  theme: {
-    extend: {}
-  },
+  // theme: {  extend: {} },
   plugins: [library.plugin]
 }
 
