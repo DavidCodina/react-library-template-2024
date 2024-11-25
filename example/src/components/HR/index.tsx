@@ -22,7 +22,7 @@ export const HR = ({ color = '', style = {} }: IHR) => {
           '--hr-color': color
             ? color
             : mode === 'dark'
-              ? 'var(--tw-dark-primary-color)'
+              ? 'var(--dark-primary-color)'
               : '#409',
           ...style
         } as CSSProperties

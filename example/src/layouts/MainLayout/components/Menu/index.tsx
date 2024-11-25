@@ -28,7 +28,7 @@ export const Menu = () => {
           <Navicon
             data-toggle='offcanvas'
             onClick={() => setShowMenu((v) => !v)}
-            iconClassName={`text-blue-500 dark:text-[var(--tw-dark-primary-color)]`}
+            iconClassName={`text-blue-500 dark:text-(--dark-primary-color)`}
             show={showMenu}
             style={{ position: 'absolute', top: 10, right: 10 }}
           />

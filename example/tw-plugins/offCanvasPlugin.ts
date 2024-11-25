@@ -197,3 +197,5 @@ export const offCanvasPlugin = plugin(function (pluginApi) {
     }
   })
 })
+
+export default offCanvasPlugin

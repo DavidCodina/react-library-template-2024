@@ -48,6 +48,8 @@ const PageHome = () => {
 
         <div className='square mb-6' />
 
+        <div className='my-circle mb-6' />
+
         <Square />
       </PageContainer>
     </Page>

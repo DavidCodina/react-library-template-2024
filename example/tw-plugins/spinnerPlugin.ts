@@ -3,6 +3,7 @@ import plugin from 'tailwindcss/plugin'
 /* ========================================================================
                               spinnerPlugin
 ======================================================================== */
+
 ///////////////////////////////////////////////////////////////////////////
 //
 // Usage:
@@ -46,7 +47,7 @@ export const spinnerPlugin = plugin(function (pluginApi) {
     },
 
     '.dark .spinner-border': {
-      color: 'var(--tw-dark-primary-color)'
+      color: 'var(--dark-primary-color)'
     },
 
     '.spinner-border-sm': {
@@ -64,3 +65,5 @@ export const spinnerPlugin = plugin(function (pluginApi) {
     }
   })
 })
+
+export default spinnerPlugin

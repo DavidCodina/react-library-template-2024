@@ -4,7 +4,7 @@ import plugin from 'tailwindcss/plugin'
                                     basePlugin
 ======================================================================== */
 // Base styles can be changed through the plugin: https://tailwindcss.com/docs/plugins#adding-base-styles
-// However you can also extent preflight: https://tailwindcss.com/docs/preflight#extending-preflight
+// However, you can also extend preflight: https://tailwindcss.com/docs/preflight#extending-preflight
 
 export const basePlugin = plugin(function (pluginApi) {
   const { addBase /*, theme */, config } = pluginApi
@@ -46,7 +46,7 @@ export const basePlugin = plugin(function (pluginApi) {
     body: {
       // This works as a default. However,
       // MainLayout overrides it based on light/dark theme.
-      backgroundColor: 'var(--tw-body-color)',
+      backgroundColor: 'var(--body-color)',
       color: '#212529', // ???
       fontSize: '1rem', // fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
       fontWeight: '400',
@@ -318,3 +318,5 @@ export const basePlugin = plugin(function (pluginApi) {
     }
   })
 })
+
+export default basePlugin

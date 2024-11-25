@@ -55,7 +55,7 @@ export const MainLayout = () => {
       />
 
       <div
-        className={`flex w-full flex-1 transition-[background] duration-300 ease-linear dark:bg-[var(--tw-dark-body-color)] dark:text-[var(--tw-dark-text-color)]`}
+        className={`flex w-full flex-1 transition-[background] duration-300 ease-linear dark:bg-[var(--dark-body-color)] dark:text-[var(--dark-text-color)]`}
       >
         <ErrorBoundary
           FallbackComponent={PageError}

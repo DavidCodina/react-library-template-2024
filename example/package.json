@@ -13,10 +13,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "dc-react-ts-test-library": "file:..",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "dc-react-ts-test-library": "file:..",
     "material-symbols": "^0.27.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -27,6 +27,8 @@
     "use-context-selector": "^2.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0-beta.2",
+    "@tailwindcss/vite": "^4.0.0-beta.2",
     "@testing-library/dom": "^10.1.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.6",
@@ -58,7 +60,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "resize-observer-polyfill": "^1.5.1",
-    "tailwindcss": "^3.4.15",
+    "tailwindcss": "^4.0.0-beta.2",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.11.0",
     "vite": "^5.4.10",

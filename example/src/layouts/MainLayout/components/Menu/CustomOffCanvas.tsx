@@ -49,9 +49,9 @@ hover:before:rounded-full
 hover:before:bg-indigo-800
 hover:text-indigo-800
 focus-visible:shadow-[inset_0_0_0_2px_theme(colors.indigo.800)] 
-dark:focus-visible:shadow-[inset_0_0_0_2px_var(--tw-dark-primary-color)]
+dark:focus-visible:shadow-[inset_0_0_0_2px_var(--dark-primary-color)]
 focus:outline-none
-dark:text-[var(--tw-dark-primary-color)] 
+dark:text-[var(--dark-primary-color)] 
 `
 
 const activeLinkStyle = `
@@ -74,9 +74,9 @@ hover:before:rounded-full
 hover:before:bg-white
 hover:text-white
 focus-visible:shadow-[inset_0_0_0_2px_theme(colors.sky.300)]
-dark:focus-visible:shadow-[inset_0_0_0_2px_var(--tw-dark-primary-color)]
+dark:focus-visible:shadow-[inset_0_0_0_2px_var(--dark-primary-color)]
 focus:outline-none
-dark:text-[var(--tw-dark-primary-color)] 
+dark:text-[var(--dark-primary-color)] 
 `
 
 /* ========================================================================
@@ -120,7 +120,7 @@ export const CustomOffCanvas = ({
   const renderControls = () => {
     const modeHoverColors = {
       light: 'hover:text-indigo-800',
-      dark: 'dark:opacity-75 dark:hover:opacity-100 hover:dark:text-[var(--tw-dark-primary-color)]'
+      dark: 'dark:opacity-75 dark:hover:opacity-100 hover:dark:text-(--dark-primary-color)'
     }
 
     //! We shouldn't have to use mode here...
@@ -136,8 +136,8 @@ export const CustomOffCanvas = ({
           style={{}}
           title='Toggle Light/Dark Mode'
         >
-          <FontAwesomeIcon className='dark:hidden' icon={faSun} />
-          <FontAwesomeIcon className='hidden dark:block' icon={faMoon} />
+          <FontAwesomeIcon className='dark:!hidden' icon={faSun} />
+          <FontAwesomeIcon className='!hidden dark:!block' icon={faMoon} />
         </button>
 
         {/* <OffCanvas.CloseButton onClose={() => setShowMenu(false)} /> */}
@@ -149,7 +149,7 @@ export const CustomOffCanvas = ({
             viewBox='0 0 24 24'
             strokeWidth={2.5}
             stroke='currentColor'
-            className={`block h-8 w-8 cursor-pointer opacity-50 hover:text-indigo-800 hover:opacity-100 dark:opacity-75 dark:hover:text-[var(--tw-dark-primary-color)] dark:hover:opacity-100`}
+            className={`block h-8 w-8 cursor-pointer opacity-50 hover:text-indigo-800 hover:opacity-100 dark:opacity-75 dark:hover:text-[var(--dark-primary-color)] dark:hover:opacity-100`}
           >
             <path
               strokeLinecap='round'
@@ -204,7 +204,7 @@ export const CustomOffCanvas = ({
 
   return (
     <OffCanvas
-      className='dark:border-r-[var(--tw-dark-primary-color)]'
+      className='dark:border-r-[var(--dark-primary-color)]'
       disableBodyClick={false}
       disableBackdrop={false}
       disableScrollLock={false}
@@ -225,7 +225,7 @@ export const CustomOffCanvas = ({
       {/* The  OffCanvas does not have a div.offcanvas-body. It doesn't 
         really need one, but we can add it here if we want. */}
       <div
-        className='bg-[var(--tw-body-color)] dark:bg-[var(--tw-dark-body-color)]'
+        className='bg-(--body-color) dark:bg-(--dark-body-color)'
         style={{
           flexGrow: 1,
           overflowY: 'auto'

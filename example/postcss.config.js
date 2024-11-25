@@ -1,28 +1,20 @@
 export default {
   plugins: {
     // https://tailwindcss.com/docs/using-with-preprocessors
-    'postcss-import': {},
+    // Before v4.0, if you wanted to inline other CSS files using
+    // @import you’d have to configure another plugin like postcss-import to handle it for you.
+    // This is now baked into @tailwindcss/postcss.
+    // ❌ 'postcss-import': {},
 
-    ///////////////////////////////////////////////////////////////////////////
-    //
-    // Want to use CSS nesting without a .scss file? Just do this:  'tailwindcss/nesting': {},
-    // https://tailwindcss.com/docs/using-with-preprocessors#nesting
-    //
-    //   .nesting-test {
-    //     div {
-    //       background-color: green;
-    //       height: 100px;
-    //       width: 100px;
-    //       border-radius: 10px;
-    //     }
-    //     &:hover {
-    //       div { background-color: blue; }
-    //     }
-    //   }
-    //
-    ///////////////////////////////////////////////////////////////////////////
-    'tailwindcss/nesting': {},
-    tailwindcss: {},
-    autoprefixer: {}
+    // You no longer need to install @tailwindcss/nesting.
+    // This works out of the box:
+
+    // ❌  '@tailwindcss/nesting': {},
+    '@tailwindcss/postcss': {}
+    // ❌ tailwindcss: {}
+
+    // When building for production, Tailwind CSS v4.0 runs your CSS through Lightning CSS automatically,
+    // which handles things like vendor prefixes, modern feature transpilation, minification, and more.
+    // ❌ autoprefixer: {}
   }
 }
