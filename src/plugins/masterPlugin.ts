@@ -19,3 +19,5 @@ export const library = {
   // If it's not, then the consumer must construct the path manually.
   content: './node_modules/dc-react-ts-test-library/dist/esm/index.js'
 }
+
+export default masterPlugin

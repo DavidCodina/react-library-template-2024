@@ -21,8 +21,8 @@ export const squarePluginFunction = (pluginApi: PluginAPI) => {
   })
 }
 
-const squarePlugin = plugin(function (pluginApi) {
+export const squarePlugin = plugin(function (pluginApi) {
   squarePluginFunction(pluginApi)
 })
 
-export { squarePlugin }
+export default squarePlugin
