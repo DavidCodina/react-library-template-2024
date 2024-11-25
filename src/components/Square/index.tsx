@@ -38,7 +38,7 @@ const Square = ({ className = '', style = {}, ...otherProps }: Props) => {
       {...otherProps}
       style={style}
       className={twMerge(
-        `flex h-40 w-40 items-center justify-center rounded-xl bg-green-500 text-2xl font-bold text-white dark:border-4 dark:border-dashed dark:border-red-500`,
+        `flex h-40 w-40 items-center justify-center rounded-xl bg-pink-500 text-2xl font-bold text-white dark:border-4 dark:border-dashed dark:border-red-500`,
         className
       )}
       // className={twMerge('square', className)}

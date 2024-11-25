@@ -47,6 +47,8 @@ const PageHome = () => {
 
         <HR style={{ marginBottom: 50 }} />
 
+        <div className='text-purple-500'>Hello</div>
+
         <div className='square mb-6' />
         <div className='my-circle mb-6' />
 
