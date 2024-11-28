@@ -82,6 +82,7 @@ const config = [
     plugins: [
       postcss({
         extract: true,
+        // config: false, // This prevents reading postcss.config.mjs
         // minimize: true,
         // Don't forget to add 'postcss-import': {}, to the postcss.config.mjs,
         // which is used within .storybook/main.ts

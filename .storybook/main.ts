@@ -30,10 +30,15 @@ const config: StorybookConfig = {
                 options: { importLoaders: 1 }
               },
               {
-                //^ Gets options from `postcss.config.js` in your project root
-                //^ Do not omit postcss.config.mjs
+                // Gets options from `postcss.config.js` in your project root
+                // Do not omit postcss.config.mjs, or pcss.config.mjs
                 loader: 'postcss-loader',
-                options: { implementation: require.resolve('postcss') }
+                options: {
+                  implementation: require.resolve('postcss'),
+                  postcssOptions: {
+                    config: './pcss.config.mjs'
+                  }
+                }
               }
             ]
           }
