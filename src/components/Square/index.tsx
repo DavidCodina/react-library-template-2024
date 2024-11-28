@@ -33,6 +33,13 @@ const Square = ({ className = '', style = {}, ...otherProps }: Props) => {
           return
   ====================== */
 
+/*
+  "@rollup/plugin-json": "^6.1.0",
+  "react": ">= 18.x",
+  "react-dom": ">= 18.x",
+  "tailwind-merge": "^2.x"
+  */
+
   return (
     <div
       {...otherProps}
